@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+env:
+  PROJECT_ID: tasks-project-387506 # TODO: update Google Cloud project id
+  SERVICE: tasks-api # TODO: update Cloud Run service name
+  REGION: australia-southeast2 # TODO: update Cloud Run service region   
+  
 jobs: 
   build_test: 
     runs-on: ubuntu-latest
@@ -26,5 +31,18 @@ jobs:
 
       - name: Run Tets
         run: npm run test
-
       
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          # NOTE: If required, update to the appropriate source folder
+          source: ./
