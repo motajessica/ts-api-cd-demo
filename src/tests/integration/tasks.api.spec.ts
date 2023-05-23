@@ -13,7 +13,6 @@ describe ('Tasks API', () => {
       isCompleted: false,
       }
     ]
-
     //Act
     const res = await request(app).get('/api/tasks')
 
