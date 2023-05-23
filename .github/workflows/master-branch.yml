@@ -46,6 +46,6 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If required, update to the appropriate source folder
           source: ./
-          
+
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
